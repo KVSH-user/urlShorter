@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HOST: root@5.35.12.68
-      DEPLOY_DIRECTORY: /root/apps/urlShotrer
+      DEPLOY_DIRECTORY: /root/apps/urlShorter
       CONFIG_PATH: /root/apps/urlShorter/config/prod.yaml
       ENV_FILE_PATH: /root/apps/urlShorter/config.env
 
