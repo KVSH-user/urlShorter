@@ -1,0 +1,15 @@
+[Unit]
+Description=Url Shorter
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/apps/urlShorter
+ExecStart=/root/apps/urlShorter/urlShorter
+Restart=always
+RestartSec=4
+StandardOutput=inherit
+EnvironmentFile=/root/apps/urlShorter/config.env
+
+[Install]
+WantedBy=multi-user.target
