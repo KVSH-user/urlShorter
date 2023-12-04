@@ -58,7 +58,7 @@ jobs:
           touch ${{ env.ENV_FILE_PATH }} && \
           chmod 600 ${{ env.ENV_FILE_PATH }} && \
           echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
-          echo 'HTTP_SERVER_PASSWORD=${{ secrets.DEPLOY_SSH_KEY }}' >> ${{ env.ENV_FILE_PATH }}"
+          echo 'HTTP_SERVER_PASSWORD=${{ secrets.AUTH_PATH }}' >> ${{ env.ENV_FILE_PATH }}"
       - name: Copy systemd service file
         run: |
           scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/urlShorter.service ${{ env.HOST }}:/tmp/urlShorter.service
