@@ -39,12 +39,12 @@ jobs:
       - name: Deploy to VM
         run: |
           sudo apt-get install -y ssh rsync
-          echo "$URL_PASS" > deploy_key.pem
+          echo "$DEPLOY_SSH_KEY" > deploy_key.pem
           chmod 600 deploy_key.pem
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "mkdir -p ${{ env.DEPLOY_DIRECTORY }}"
           rsync -avz -e 'ssh -i deploy_key.pem -o StrictHostKeyChecking=no' --exclude='.git' ./ ${{ env.HOST }}:${{ env.DEPLOY_DIRECTORY }}
         env:
-          DEPLOY_SSH_KEY: ${{ secrets.URL_PASS }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
       - name: Remove old systemd service file
         run: |
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f /etc/systemd/system/urlShorter.service"
@@ -58,7 +58,7 @@ jobs:
           touch ${{ env.ENV_FILE_PATH }} && \
           chmod 600 ${{ env.ENV_FILE_PATH }} && \
           echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
-          echo 'HTTP_SERVER_PASSWORD=${{ secrets.AUTH_PASS }}' >> ${{ env.ENV_FILE_PATH }}"
+          echo 'HTTP_SERVER_PASSWORD=${{ secrets.DEPLOY_SSH_KEY }}' >> ${{ env.ENV_FILE_PATH }}"
       - name: Copy systemd service file
         run: |
           scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/urlShorter.service ${{ env.HOST }}:/tmp/urlShorter.service
